@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<h1>
+    {% block header %}
+       Blog listing
+    {% endblock header %}
+</h1>
+
+
+<!--this block contains listing out the blog pst by the user-->
+{% block content %}
+
+{% if blog_list %}
+
+{% for blogEntry in blog_list %}
+<p>User: {{blogEntry}}</p>
+<p> Blog Title:{{ blogEntry.blog_title}}</p>
+{% endfor %}
+
+{% else %}
+<p>Why don't you make a blog post?</p>
+{% endif %}
+
+{% endblock content %}
+<!--this allows the person to log out so you can change users and it will automatically direct to logout redirect page being the login screen-->
+<a href="{% url 'logout' %}">Logout</a>
+</body>
+</html>

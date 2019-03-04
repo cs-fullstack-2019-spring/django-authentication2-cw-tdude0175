@@ -1,0 +1,42 @@
+{% extends 'blogApp/index.html' %}
+
+<!--the neat thing aboout django is that it already has prebuilt forms loading to this page that will load such as the form-->
+{% block header %}
+Login Page
+{% endblock header %}
+
+{% block content %}
+<!--if they fill out the form but fail to meet the requirements they will not be able to proceed-->
+{% if forms.errors %}
+<p>Error identified logging in, please try again.</p>
+{% endif %}
+
+{% if next %}
+{% if user.is_authenticated %}
+<p>Access denied, you do not have permission to be here.</p>
+{% else %}
+<p>Login required to view content. Please log in</p>
+{% endif %}
+{% endif %}
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+<table>
+<!--simple table to keep the tags and usernames orderly-->
+    <tr>
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+    </tr>
+    <tr>
+        <td>{{ form.password.label_tag}}</td>
+        <td>{{ form.password}}</td>
+    </tr>
+
+</table>
+<!--the inputs are used to tell it the person in now logged in-->
+    <input type="submit" value="login" />
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+
+{% endblock content %}
